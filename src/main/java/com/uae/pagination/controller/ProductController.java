@@ -20,8 +20,13 @@ public class ProductController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "2")int size,
             @RequestParam(defaultValue = "price")String sortBy,
-            @RequestParam(defaultValue = "asc")String direction){
-        return productService.getAllProducts(page, size,sortBy,direction);
+            @RequestParam(defaultValue = "asc")String direction,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) Double minPrice,
+            @RequestParam(required = false) Double maxPrice,
+            @RequestParam(required = false) Integer stock
+    ){
+        return productService.getAllProducts(page, size,sortBy,direction,category,minPrice,maxPrice,stock);
     }
 
     @PostMapping("products")
