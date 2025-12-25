@@ -2,10 +2,8 @@ package com.uae.pagination.controller;
 
 import com.uae.pagination.entities.Product;
 import com.uae.pagination.service.ProductService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,8 +16,12 @@ public class ProductController {
     }
 
     @GetMapping("products")
-    public List<Product> findAll(){
-        return productService.getAllProducts();
+    public Page<Product> findAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "2")int size,
+            @RequestParam(defaultValue = "price")String sortBy,
+            @RequestParam(defaultValue = "asc")String direction){
+        return productService.getAllProducts(page, size,sortBy,direction);
     }
 
     @PostMapping("products")

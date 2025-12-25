@@ -2,6 +2,10 @@ package com.uae.pagination.service;
 
 import com.uae.pagination.entities.Product;
 import com.uae.pagination.repository.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,8 +16,11 @@ public class ProductService {
     public ProductService(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
-    public List<Product> getAllProducts() {
-    return productRepository.findAll();
+    public Page<Product> getAllProducts(int page, int size, String sortBy, String direction) {
+        Sort sort = direction.equalsIgnoreCase("desc")?
+                Sort.by(sortBy).descending():Sort.by(sortBy).ascending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+    return productRepository.findAll(pageable);
     }
 
     public Product save(Product product) {
