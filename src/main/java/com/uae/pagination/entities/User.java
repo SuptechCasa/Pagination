@@ -26,14 +26,14 @@ public class User implements UserDetails {
     String roles;
     boolean active;
 
-    private List<String> getRoles(){
+    private List<String> getActiveRoles(){
         return Arrays.asList(this.roles.split(","));
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         ArrayList<GrantedAuthority> authorities = new ArrayList<>();
-        getRoles().forEach(role -> {
+        getActiveRoles().forEach(role -> {
             authorities.add(new SimpleGrantedAuthority(role));
         });
         return authorities;
